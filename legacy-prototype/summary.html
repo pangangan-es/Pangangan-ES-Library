@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Library History Report</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <div class="school-info-group">
+        <img src="images/ferminlogo.png" alt="FTNHS Logo" class="school-logo">
+        <div class="school-text-wrapper">
+          <div class="school-name">FERMIN TAYABAS NATIONAL HIGH SCHOOL</div>
+          <div class="school-address">Cabayugan, Calape, Bohol</div>
+        </div>
+      </div>
+      <h1 class="app-title">📊 Library History Report</h1>
+    </div>
+  </header>
+
+  <main>
+    <div class="controls">
+      <a href="index.html"><button class="primary">⬅ Back to Tracker</button></a>
+      <button onclick="window.print()">🖨️ Print Report</button>
+      <button onclick="exportCSV()" style="background:#059669; color:#fff;">📥 Export CSV</button>
+      <button id="toggleDeleteBtn" onclick="toggleDeleteMode()" style="background:#64748b; color:white;">🛠️ Manage Records</button>
+    </div>
+
+    <div class="filter-bar">
+      <div class="filter-group">
+        <label>Search Book/Borrower</label>
+        <input type="text" id="mainSearch" placeholder="Type to search..." onkeyup="renderSummary()">
+      </div>
+
+      <div class="filter-group">
+        <label>Filter Borrower</label>
+        <select id="filterBorrower" onchange="renderSummary()">
+          <option value="">All Borrowers</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label>Staff In-Charge</label>
+        <select id="filterStaff" onchange="renderSummary()">
+          <option value="">All Staff</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label>📅 Borrowed Date Range</label>
+        <div class="date-range-container">
+          <input type="date" id="dateB_start" onchange="renderSummary()">
+          <span>to</span>
+          <input type="date" id="dateB_end" onchange="renderSummary()">
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <label>🔙 Returned Date Range</label>
+        <div class="date-range-container">
+          <input type="date" id="dateR_start" onchange="renderSummary()">
+          <span>to</span>
+          <input type="date" id="dateR_end" onchange="renderSummary()">
+        </div>
+      </div>
+
+      <div class="filter-group" style="flex: 0 0 100%;">
+          <button class="primary" onclick="renderSummary()" style="flex: 2;">🔍 Apply Filters</button>
+          <button onclick="clearFilters()" style="flex: 1;">Reset All</button>
+      </div>
+    </div>
+
+    <table id="historyTable" class="report-table">
+      <thead>
+        <tr>
+          <th style="width: 20%;">Book Details</th>
+          <th style="width: 20%;">Borrower</th>
+          <th style="width: 25%;">Loan Info</th>
+          <th style="width: 25%;">Return Transactions</th>
+          <th style="width: 10%;">Status</th>
+        </tr>
+      </thead>
+      <tbody id="summaryBody"></tbody>
+    </table>
+  </main>
+
+  <script src="summary.js"></script>
+</body>
+</html>

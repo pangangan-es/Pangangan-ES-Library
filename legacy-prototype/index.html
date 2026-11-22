@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FTNHS Library Management</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <div class="school-info-group">
+        <img src="images/ferminlogo.png" alt="FTNHS Logo" class="school-logo">
+        <div class="school-text-wrapper">
+          <div class="school-name">FERMIN TAYABAS NATIONAL HIGH SCHOOL</div>
+          <div class="school-address">Cabayugan, Calape, Bohol</div>
+        </div>
+      </div>
+      <h1 class="app-title">Library Management System</h1>
+    </div>
+  </header>
+
+  <main>
+    <div class="dashboard-grid">
+      <div class="stat-card">
+        <h4>🏆 Top Borrowers</h4>
+        <ul id="topBorrowersList"></ul>
+      </div>
+      <div class="stat-card">
+        <h4>🔥 Most Popular Books</h4>
+        <ul id="topBooksList"></ul>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button class="primary" onclick="openBookModal()">➕ Add New Book</button>
+      <button style="background: #10b981; color: white;" onclick="openSettingsModal()">⚙️ Manage Lists</button>
+      <a href="summary.html"><button>📊 Full History / Report</button></a>
+    </div>
+
+    <h3>📖 Book Inventory</h3>
+    <div class="search-container" style="margin: 10px 0 20px 0; max-width: 100%;">
+      <input type="text" id="searchInput" placeholder="🔍 Search inventory by title or author..." onkeyup="render()">
+    </div>
+
+    <table id="inventoryTable">
+      <thead>
+        <tr>
+          <th style="width: 25%;">Title</th>
+          <th style="width: 25%;">Author</th>
+          <th style="width: 15%;">Total Copies</th>
+          <th style="width: 15%;">Available</th>
+          <th style="width: 20%;">Actions</th>
+        </tr>
+      </thead>
+      <tbody id="inventoryBody"></tbody>
+    </table>
+
+    <h3>🤝 Active Loans (Borrowed Books)</h3>
+    <div class="search-container" style="margin: 10px 0 15px 0; max-width: 100%;">
+      <input type="text" id="loanSearchInput" placeholder="🔍 Search borrower or book title..." onkeyup="render()">
+    </div>
+    <table id="loanTable">
+      <thead>
+        <tr>
+          <th>Book Title</th>
+          <th>Qty</th>
+          <th>Borrower</th>
+          <th>Days Out</th>
+          <th>In-Charge</th>
+          <th>Borrowed Date</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="loanBody"></tbody>
+    </table>
+  </main>
+
+  <footer>
+      <button onclick="resetBorrowingLogs()" style="background:#f59e0b; color:white;">🧹 Reset Borrowing Logs</button>
+      <button onclick="resetLibrary()" style="background:#dc2626; color:white; opacity: 0.8;">♻ Reset Entire Database</button>
+      <p>Warning: This button wipes all books, history, and settings.</p>
+  </footer>
+
+  <div class="modal" id="bookModal">
+    <div class="modal-box">
+      <h2 id="modalTitle">Book Details</h2>
+      <input type="hidden" id="editBookId">
+      <label>Book Title</label>
+      <input type="text" id="bookTitle">
+      <label>Author</label>
+      <input type="text" id="bookAuthor">
+      <label>Total Copies</label>
+      <input type="number" id="bookCopies" min="1" value="1">
+      <div class="actions" style="margin-top:20px; display:flex; gap:10px;">
+        <button class="primary" onclick="saveBook()">Save Book</button>
+        <button onclick="closeModal('bookModal')">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="borrowModal">
+    <div class="modal-box">
+      <h2>Loan Book</h2>
+      <input type="hidden" id="borrowBookId">
+      <label>Borrower Name</label>
+      <input type="text" id="borrowerName">
+      <label>Grade & Section</label>
+      <select id="gradeSectionSelect"></select>
+      <label>Qty to Borrow</label>
+      <input type="number" id="borrowQty" value="1" min="1">
+      <label>In-Charge (Borrowing)</label>
+      <select id="inChargeSelect"></select>
+      <div class="actions" style="margin-top:20px; display:flex; gap:10px;">
+        <button class="primary" onclick="confirmBorrow()">Confirm Loan</button>
+        <button onclick="closeModal('borrowModal')">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="returnModal">
+    <div class="modal-box">
+      <h2>Return Copies</h2>
+      <input type="hidden" id="returnHistoryIndex">
+      <p id="returnInfoText" style="background: #f1f5f9; padding: 10px; border-radius: 5px;"></p>
+      <label>Qty being Returned</label>
+      <input type="number" id="returnQty" min="1">
+      <label>In-Charge (Receiving)</label>
+      <select id="returnInChargeSelect"></select>
+      <div class="actions" style="margin-top:20px; display:flex; gap:10px;">
+        <button class="primary" onclick="confirmReturn()">Confirm Return</button>
+        <button onclick="closeModal('returnModal')">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="settingsModal">
+    <div class="modal-box">
+      <h2>⚙️ Manage Lists</h2>
+      <label>Add Staff</label>
+      <div style="display: flex; gap: 5px;"><input type="text" id="newStaffName"><button class="primary" onclick="addListItem('staff')">Add</button></div>
+      <ul id="staffListView" class="config-list"></ul>
+      <label>Add Section</label>
+      <div style="display: flex; gap: 5px;"><input type="text" id="newSectionName"><button class="primary" onclick="addListItem('section')">Add</button></div>
+      <ul id="sectionListView" class="config-list"></ul>
+      <div class="actions" style="margin-top:20px;"><button onclick="closeModal('settingsModal')">Close</button></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
