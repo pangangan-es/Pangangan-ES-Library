@@ -285,7 +285,7 @@ export default function HomePage() {
 
               <ScrollReveal delay={0.12}>
                 <p className="text-base sm:text-lg text-ink-700 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-sans">
-                  Welcome to our school’s reading hub. Explore storybooks, science discoveries, and local Philippine fables curated for Pangangan elementary learners.
+                  Welcome to our school’s library hub. Explore storybooks, science discoveries, and local Philippine fables curated for Pangangan elementary learners.
                 </p>
               </ScrollReveal>
 

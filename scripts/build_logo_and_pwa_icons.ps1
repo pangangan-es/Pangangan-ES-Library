@@ -204,7 +204,7 @@ public class LogoProcessor
             using (SolidBrush grayBrush = new SolidBrush(Color.FromArgb(203, 213, 225))) // slate-300
             {
                 RectangleF subRect = new RectangleF(70, 276, 560, 90);
-                g.DrawString("Lomboy, Calape, Bohol • An online reading hub for elementary storybooks, Philippine folklore, and DepEd learning modules.", subFont, grayBrush, subRect);
+                g.DrawString("Lomboy, Calape, Bohol • An online library hub for elementary storybooks, Philippine folklore, and DepEd learning modules.", subFont, grayBrush, subRect);
             }
 
             // Tags
@@ -229,10 +229,10 @@ public class LogoProcessor
             }
 
             // URL Pill (Bottom-Left)
-            using (Font urlFont = new Font("Segoe UI", 13, FontStyle.Bold))
-            using (SolidBrush urlBrush = new SolidBrush(Color.FromArgb(148, 163, 184))) // slate-400
+            using (Font urlFont = new Font("Segoe UI", 13.5f, FontStyle.Bold))
+            using (SolidBrush urlBrush = new SolidBrush(Color.FromArgb(245, 158, 11))) // gold-500
             {
-                g.DrawString("pesbooks", urlFont, urlBrush, 70, 540);
+                g.DrawString("pesbooks.onrender.com", urlFont, urlBrush, 70, 540);
             }
 
             // Right Column: Official Circular Seal
