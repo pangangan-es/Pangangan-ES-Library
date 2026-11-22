@@ -4,7 +4,7 @@
 services:
   - type: web
     runtime: static
-    name: panganganeslibrary
+    name: pesbooks
     # Uses the clean, lockfile-exact install when package-lock.json is committed (it should be),
     # and falls back to npm install so the very first build cannot fail on a missing lockfile.
     buildCommand: if [ -f package-lock.json ]; then npm ci; else npm install; fi && npm run build

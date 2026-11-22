@@ -35,7 +35,7 @@ In the Supabase dashboard, **Authentication**:
 
 1. **Sign In / Providers → Email**: keep email sign-in on. **Disable "Allow new users to sign up"** (public sign-up). The database also denies access to any Auth user without a staff profile, but sign-up should be off regardless.
 2. **Password requirements**: set a minimum length of at least 10 (the app enforces 10 plus a letter and a number in its own form).
-3. **URL Configuration**: set **Site URL** to your real app origin and add redirect URLs. For local work add `http://localhost:5173/**`; for production add the exact Render URL, e.g. `https://panganganeslibrary.onrender.com/auth/set-password`. Invitation and recovery emails return to `/auth/set-password`.
+3. **URL Configuration**: set **Site URL** to your real app origin and add redirect URLs. For local work add `http://localhost:5173/**`; for production add the exact Render URL, e.g. `https://pesbooks.onrender.com/auth/set-password`. Invitation and recovery emails return to `/auth/set-password`.
 4. **SMTP**: Supabase's built-in email sender is heavily rate-limited and meant for testing. Configure a custom SMTP provider before inviting real staff.
 5. Optionally customise the **Invite user** and **Reset password** email templates with the school name.
 
@@ -72,8 +72,8 @@ Two trusted server functions live in `supabase/functions/`:
 Set their secrets (the service-role key is injected by Supabase automatically; you never handle it):
 
 ```bash
-supabase secrets set SITE_URL=https://panganganeslibrary.onrender.com
-supabase secrets set ALLOWED_ORIGINS=https://panganganeslibrary.onrender.com,http://localhost:5173
+supabase secrets set SITE_URL=https://pesbooks.onrender.com
+supabase secrets set ALLOWED_ORIGINS=https://pesbooks.onrender.com,http://localhost:5173
 supabase secrets set LOGIN_THROTTLE_PEPPER=$(openssl rand -hex 32)
 ```
 
